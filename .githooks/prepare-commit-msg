@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e # no commit if unit tests fails or linting errors remain
+
+
+

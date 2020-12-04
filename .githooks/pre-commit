@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e # no commit if unit tests fails or linting errors remain
+echo
+echo "PRE-COMMIT"
+
+# first run unit tests (will exit if there are errors)
+npm test
+
+# now run eslint (still exiting/preventing comit if errors occur)
+./node_modules/.bin/eslint .
+
+
+# exit if user attempts to merge branch ino master instead
+# of creating a pull request
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [[ $2 == 'merge' ]] && [[ "$branch" == "master" ]]; then
+	echo " cannot merge into master directly "
+	echo " create a pull request "
+	exit 1
+fi
+
+# prevent commits on master branch (should commit to other branches
+# and merge into master via pull requests)
+if [[ "$branch" == "master" ]]; then
+    echo " cannot commit to master branch; exiting..."
+	ech " no commit has been made"
+    exit 1
+fi
+
+echo "  commit successful..."
