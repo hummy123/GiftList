@@ -86,8 +86,8 @@ test('GET EVENT : argument given is a string', async test => {
 	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
 	try {
 		event.getEvent('one').catch(err => {
-				test.is(err.message, 'id must be a number')
-			})
+			test.is(err.message, 'id must be a number')
+		})
 	} finally {
 		event.close()
 	}
