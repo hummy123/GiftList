@@ -35,7 +35,10 @@ class Events {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
 		})
-		const sql = `INSERT INTO events(title, description, date, image) VALUES("${title}", "${description}", "${date}", "${image}")`
+		/* long line is necessary for query, but eslint throws a warning
+		 * of a rule violation in that case, so split query string */
+		const sql = 'INSERT INTO events(title, description, date, image)'
+		sql += ` VALUES("${title}", "${description}", "${date}", "${image}")`
 		await this.db.run(sql)
 		return true
 	}
@@ -44,7 +47,7 @@ class Events {
 		const sql = 'SELECT * FROM events'
 		return await this.db.all(sql)
 	}
-	
+
 	/**
 	 * checks to see if a set of login credentials are valid
 	 * @param {String} username the username to check
