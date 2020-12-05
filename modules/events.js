@@ -49,7 +49,7 @@ class Events {
 	}
 
 	async getEvent(id) {
-		if(typeof(id) !== 'number') throw new Error('id must be a number')
+		if(typeof id !== 'number') throw new Error('id must be a number')
 		const sql = `SELECT * FROM events WHERE id=${id}`
 		const result = await this.db.get(sql)
 		if(result === undefined) throw new Error('no results')

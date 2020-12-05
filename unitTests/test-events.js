@@ -85,10 +85,9 @@ test('GET EVENT : argument given is a string', async test => {
 	const event = await new Events()
 	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
 	try {
-		const result = event.getEvent('one')
-		.catch(err => {
-			test.is(err.message, 'id must be a number')
-		})
+		event.getEvent('one').catch(err => {
+				test.is(err.message, 'id must be a number')
+			})
 	} finally {
 		event.close()
 	}
@@ -99,7 +98,7 @@ test('GET EVENT : integer id is out of range', async test => {
 	const event = await new Events()
 	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
 	try {
-		const result = await event.getEvent(2)
+		await event.getEvent(2)
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'no results')
