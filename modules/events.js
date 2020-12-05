@@ -37,7 +37,7 @@ class Events {
 		})
 		/* long line is necessary for query, but eslint throws a warning
 		 * of a rule violation in that case, so split query string */
-		const sql = 'INSERT INTO events(title, description, date, image)'
+		let sql = 'INSERT INTO events(title, description, date, image)'
 		sql += ` VALUES("${title}", "${description}", "${date}", "${image}")`
 		await this.db.run(sql)
 		return true
