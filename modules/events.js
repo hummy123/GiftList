@@ -35,9 +35,7 @@ class Events {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
 		})
-		let sql = `SELECT COUNT(id) as records FROM events WHERE title="${title}";`
-		const data = await this.db.get(sql)
-		sql = `INSERT INTO events(title, description, date, image) VALUES("${title}", "${description}", "${date}", "${image}")`
+		const sql = `INSERT INTO events(title, description, date, image) VALUES("${title}", "${description}", "${date}", "${image}")`
 		await this.db.run(sql)
 		return true
 	}

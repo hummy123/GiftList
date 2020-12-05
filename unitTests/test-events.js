@@ -5,8 +5,8 @@ test('NEW EVENT : create a valid event', async test => {
 	test.plan(1)
 	const event = await new Events() // no database specified so runs in-memory
 	try {
-		const eventCreated = await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
-		test.is(eventCreated, true)
+		const created = await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
+		test.is(created, true)
 	} catch(err) {
 		test.fail('error thrown')
 	} finally {
