@@ -26,14 +26,18 @@
 		{{/if}}
 	<main>
 		{{#each events}}
+		<a href="/event/{{this.id}}">
 			<figure>
 				<img src="{{host}}/uploads/{{this.image}}">
 				<figcaption>{{this.title}} <br /> {{this.date}}</figcaption>
 			</figure>
+		</a>
 		{{/each}}
-		{{#if authorised}}
-			<p><a href="/newevent">Register new event</a></p>
-		{{/if}}
 	</main>
+		<footer>
+			{{#if authorised}}
+			<p><a href="/newevent">Register new event</a></p>
+			{{/if}}
+		</footer>
 	</body>
 </html>
