@@ -5,7 +5,7 @@ import sqlite from 'sqlite-async'
 
 /**
  * Events
- * ES6 module that handles creating and retrieving events events and logging in.
+ * ES6 module that handles creating and retrieving events events.
  */
 class Events {
 	/**
