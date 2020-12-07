@@ -1,7 +1,6 @@
 
 import Router from 'koa-router'
 import fs from 'fs-extra'
-import mime from 'mime-types'
 
 const router = new Router()
 
