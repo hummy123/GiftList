@@ -1,13 +1,12 @@
 import test from 'ava'
 import Items from '../modules/items.js'
 import Events from '../modules/events.js'
-import Accounts from '../modules/accounts.js'
 import fs from 'fs'
 
 
 test.serial('NEW ITEM : create a valid item', async test => {
 	test.plan(1)
-	/* specify temporary test.db because item table uses foreign keys, 
+	/* specify temporary test.db because item table uses foreign keys,
 	 * and easier to test on real file in that case*/
 	const item = await new Items('test.db')
 	try {
@@ -105,7 +104,7 @@ test.serial('GET ITEM : error if item does not exist', async test => {
 	test.plan(1)
 	const item = await new Items('test.db')
 	try {
-		const result = await item.getItem(1)
+		await item.getItem(1)
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'no items')
@@ -118,7 +117,7 @@ test.serial('GET ITEM : error if id not number', async test => {
 	test.plan(1)
 	const item = await new Items('test.db')
 	try {
-		const result = await item.getItem('one')
+		await item.getItem('one')
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'id must be a number')
@@ -184,9 +183,10 @@ test.serial('UNPLEDGE : specify invalid item', async test => {
 
 //always put data in required (foreign key) events table before each test
 test.serial.beforeEach(async t => {
-	if (fs.existsSync('test.db')) { 
+	if (fs.existsSync('test.db')) {
 		fs.unlinkSync('test.db') //delete db if it exists before test (fresh start)
 	}
+	console.log(t)
 	const event = await new Events('test.db')
 	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg')
 	event.close()

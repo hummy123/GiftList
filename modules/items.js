@@ -2,7 +2,6 @@
 /** @module Events */
 
 import sqlite from 'sqlite-async'
-import Accounts from '../modules/accounts.js'
 
 /**
  * Events
@@ -77,7 +76,7 @@ class Items {
 		if(result === undefined) throw new Error('no items')
 		return result
 	}
-	
+
 	/**
 	 * pledges item and registers donor
 	 * @param {Number} itemID the item's primary key
@@ -104,7 +103,7 @@ class Items {
 		await this.db.run(sql)
 		return true
 	}
-	
+
 	async close() {
 		await this.db.close()
 	}
