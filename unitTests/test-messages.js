@@ -19,7 +19,7 @@ test('NEW MESSAGE : missing question', async test => {
 	test.plan(1)
 	const message = await new Messages() // no database specified so runs in-memory
 	try {
-		const result = await message.ask('', 1)
+		await message.ask('', 1)
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'missing field')
@@ -32,7 +32,7 @@ test('NEW MESSAGE : missing event ID', async test => {
 	test.plan(1)
 	const message = await new Messages() // no database specified so runs in-memory
 	try {
-		const result = await message.ask('test question', '')
+		await message.ask('test question', '')
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'missing field')
@@ -45,7 +45,7 @@ test('NEW MESSAGE : event id not a number', async test => {
 	test.plan(1)
 	const message = await new Messages() // no database specified so runs in-memory
 	try {
-		const result = await message.ask('test question', 'one')
+		await message.ask('test question', 'one')
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'event ID must be a number')
