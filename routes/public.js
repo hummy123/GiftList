@@ -75,7 +75,7 @@ router.post('/newevent', async ctx => {
 		//copy image into correct directory
 		const body = ctx.request.body
 		const image = ctx.request.files.image
-		fs.copy(image.path, `uploads/${image.name}`)
+		fs.copy(image.path, `public/uploads/${image.name}`)
 		//date to appropriate format
 		const date = new Date(body.date).toLocaleDateString()
 		await event.newEvent(body.title, body.description, date, image.name, ctx.session.authorised)
