@@ -16,8 +16,9 @@ class Events {
 		return (async() => {
 			this.db = await sqlite.open(dbName)
 			// we need this table to store the events
-			const sql = 'CREATE TABLE IF NOT EXISTS events\
-				(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, date TEXT, image TEXT);'
+			const sql = `CREATE TABLE IF NOT EXISTS events\
+				(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, date TEXT, image TEXT,
+				creator_id INTEGER, FOREIGN KEY(creator_id) REFERENCES users(id));`
 			await this.db.run(sql)
 			return this
 		})()
@@ -43,11 +44,20 @@ class Events {
 		return true
 	}
 
+	/**
+	 * gets a list of all events
+	 * @returns {Object} returns array of all event objects
+	 */
 	async getEvents() {
 		const sql = 'SELECT * FROM events'
 		return await this.db.all(sql)
 	}
 
+	/**
+	 * gets a single event
+	 * @param {Number} primary key from db
+	 * @returns {Object} returns javascript object of event if valid id
+	 */
 	async getEvent(id) {
 		if(typeof id !== 'number') throw new Error('id must be a number')
 		const sql = `SELECT * FROM events WHERE id=${id}`
