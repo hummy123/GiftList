@@ -1,9 +1,12 @@
 
 import Router from 'koa-router'
+import fs from 'fs-extra'
+import mime from 'mime-types'
 
 const router = new Router()
 
 import Accounts from '../modules/accounts.js'
+import Events from '../modules/events.js'
 const dbName = 'website.db'
 
 /**
@@ -13,6 +16,10 @@ const dbName = 'website.db'
  * @route {GET} /
  */
 router.get('/', async ctx => {
+	const event = await new Events(dbName)
+	const eventList = await event.getEvents()
+	ctx.hbs.events = eventList
+	console.log(ctx.hbs)
 	try {
 		await ctx.render('index', ctx.hbs)
 	} catch(err) {
@@ -57,13 +64,40 @@ router.get('/login', async ctx => {
 	await ctx.render('login', ctx.hbs)
 })
 
+router.get('/newevent', async ctx => {
+	console.log(ctx.hbs)
+	await ctx.render('newevent', ctx.hbs)
+})
+
+router.post('/newevent', async ctx => {
+	const event = await new Events(dbName)
+	ctx.hbs.body = ctx.request.body
+	try {
+		//copy image into correct directory
+		const body = ctx.request.body
+		const image = ctx.request.files.image
+		fs.copy(image.path, `uploads/${image.name}`)
+		//date to appropriate format
+		const date = new Date(body.date).toLocaleDateString()
+		await event.newEvent(body.title, body.description, date, image.name, ctx.session.authorised)
+		const referrer = body.referrer || '/'
+		return ctx.redirect(`${referrer}?msg=event added successfully...`)
+	} catch(err) {
+		console.log(err)
+		ctx.hbs.msg = err.message
+		await ctx.render('error', ctx.hbs)
+	} finally {
+		await event.close()
+	}
+})
+
 router.post('/login', async ctx => {
 	const account = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.user, body.pass)
-		ctx.session.authorised = true
+		const id = await account.login(body.user, body.pass)
+		ctx.session.authorised = id
 		const referrer = body.referrer || '/secure'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
 	} catch(err) {
@@ -76,7 +110,7 @@ router.post('/login', async ctx => {
 })
 
 router.get('/logout', async ctx => {
-	ctx.session.authorised = null
+	ctx.session.authorised = 0
 	ctx.redirect('/?msg=you are now logged out')
 })
 

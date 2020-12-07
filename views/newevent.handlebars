@@ -5,14 +5,14 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Home Page</title>
-		<meta name="description" content="View events">
+		<meta name="description" content="form to add new events">
 		<meta name="author" content="Humza Shahid">
 		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
 		<script type="module" src="{{host}}/main.js"></script>
 	</head>
 	<body>
 		<header>
-			<h1>Home</h1>
+			<h1>Create Event</h1>
 			{{#if authorised}}
 				<a href="/logout">Log out</a>
 			{{else}}
@@ -25,15 +25,13 @@
 			</aside>
 		{{/if}}
 	<main>
-		{{#each events}}
-			<figure>
-				<img src="{{host}}/uploads/{{this.image}}">
-				<figcaption>{{this.title}} <br /> {{this.date}}</figcaption>
-			</figure>
-		{{/each}}
-		{{#if authorised}}
-			<p><a href="/newevent">Register new event</a></p>
-		{{/if}}
+		<form method="post" enctype="multipart/form-data" action="/newevent">
+			<label>Event Title <input type="text" name="title" /></label>
+			<label>Event Description <textarea name="description"></textarea></label>
+			<label>Event Date <input type="datetime-local" name="date" /> </label>
+			<label>Event Image <input type="file" name="image" accept="image/*" /></label>
+			<input type="submit" />
+		</form>
 	</main>
 	</body>
 </html>

@@ -72,12 +72,28 @@ p, legend {
 }
 
 main {
-	max-width: 800px;
+	max-width: 60%;
 	margin: auto;
 	margin-top: 2em;
 	padding: 2em;
 	box-sizing: border-box;
 	background-color: lightgray;
+}
+
+input, textarea {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 6px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+label {
+	display:block;
+	padding-bottom: 10px;
+	text-align:center;
 }
 
 article {
@@ -146,10 +162,6 @@ legend {
 	padding: 0.6vw;
 }
 
-input, textarea {
-	box-sizing: border-box;
-}
-
 input:focus {
 	outline:none;
 }
@@ -173,15 +185,6 @@ input[type="submit"], .button, header > a, body > a, .custom-file-upload {
 input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover, .add:hover {
   color: grey;
   background-color: white;
-}
-
-input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea, select {
-	font-size: 1.5vw;
-	width: 25vw;
-	border: 1px solid #CCC;
-	padding: 0.5vw;
-	/* margin-bottom: 1vw; */
-	/* border-radius: 0.6vw; */
 }
 
 textarea {
@@ -262,6 +265,34 @@ td, th {
 
 td:last-child, th:last-child {
 	text-align: right;
+}
+
+/* ==== NEW FLEX BOX ==== */
+
+figure {
+	margin: 1em;
+	padding: 0;
+	width: 300px;
+	object-fit: cover;
+	border-radius: 1em;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	overflow: hidden;
+	background-color: rgb(219,219,219);
+	box-shadow: 3px 3px 22px -7px rgba(0,0,0,0.75);
+}
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+figcaption {
+  font-size: 1.4em;
+  text-align: center;
+  font-family: GrenzeGotisch;
+  padding-bottom: 0.3em;
 }
 
 /* ===== ADD BUTTON ===== */
