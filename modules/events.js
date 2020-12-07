@@ -32,14 +32,14 @@ class Events {
 	 * @param {String} image the name and extension of the event image
 	 * @returns {Boolean} returns true if the new event has been created
 	 */
-	async newEvent(title, description, date, image) {
+	async newEvent(title, description, date, image, creator) {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
 		})
 		/* long line is necessary for query, but eslint throws a warning
 		 * of a rule violation in that case, so split query string */
-		let sql = 'INSERT INTO events(title, description, date, image)'
-		sql += ` VALUES("${title}", "${description}", "${date}", "${image}")`
+		let sql = 'INSERT INTO events(title, description, date, image, creator_id)'
+		sql += ` VALUES("${title}", "${description}", "${date}", "${image}", "${creator}")`
 		await this.db.run(sql)
 		return true
 	}
