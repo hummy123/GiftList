@@ -1,6 +1,5 @@
 
 import Router from 'koa-router'
-import fs from 'fs-extra'
 
 const router = new Router()
 
