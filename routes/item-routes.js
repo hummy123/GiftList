@@ -27,7 +27,7 @@ router.post('/newitem/:id', async ctx => {
 		const body = ctx.request.body
 		const image = ctx.request.files.image
 		fs.copy(image.path, `public/uploads/items/${image.name}`)
-		await item.newItem(body.name, `body.price`, image.name, body.link, ctx.session.authorised)
+		await item.newItem(body.name, body.price, image.name, body.link, ctx.session.authorised)
 		const referrer = body.referrer || '/'
 		return ctx.redirect(`${referrer}?msg=item added successfully...`)
 	} catch(err) {
@@ -38,7 +38,5 @@ router.post('/newitem/:id', async ctx => {
 		await item.close()
 	}
 })
-
-
 
 export default router
