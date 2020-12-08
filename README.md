@@ -14,8 +14,8 @@ https://shahidh7-sem1.herokuapp.com/
 ### Stage 1.
 1. Home screen.
 2. Create event.
-3. On hold: Displaying event details. (Need to display items for event, but this depends on item-creation.)
-4. Currently working on: Adding items to list.
+3. Displaying event details. 
+4. Adding items to event.
 5. Currently working on: Pledging items.
 
 ### Stage 2.

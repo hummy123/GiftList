@@ -19,6 +19,14 @@ router.get('/newitem/:id', async ctx => {
 	await ctx.render('newitem', ctx.hbs)
 })
 
+router.get('/item/:id', async ctx => {
+	const itemID = parseInt(ctx.params.id)
+	const item = await new Items(dbName)
+	ctx.hbs.item = await item.getItem(itemID)
+	console.log(ctx.hbs)
+	await ctx.render('itemdetails', ctx.hbs)
+})
+
 router.post('/newitem/:id', async ctx => {
 	const item = await new Items(dbName)
 	const eventID = parseInt(ctx.params.id)
