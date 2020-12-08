@@ -58,8 +58,7 @@ class Items {
 	 */
 	async getEventItems(eventID) {
 		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
-		const sql = `SELECT * FROM items WHERE event_id=${eventID}
-					INNER JOIN users ON items.donor_id = users.id
+		const sql = `SELECT * FROM items
 					WHERE event_id=${eventID}`
 		const result = await this.db.all(sql)
 		if(result === undefined) throw new Error('no items')
@@ -73,7 +72,7 @@ class Items {
 	 */
 	async getItem(id) {
 		if(typeof id !== 'number') throw new Error('id must be a number')
-		const sql = `SELECT * FROM items WHERE id=${id}`
+		const sql = `SELECT * FROM items, users WHERE items.id=${id}`
 		const result = await this.db.get(sql)
 		if(result === undefined) throw new Error('no items')
 		return result
@@ -90,6 +89,7 @@ class Items {
 		const sql = `UPDATE items 
 					SET pledged = 1, donor_id=${donorID}
 					WHERE id=${itemID}`
+		console.log(sql)
 		await this.db.run(sql)
 		return true
 	}

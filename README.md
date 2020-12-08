@@ -12,14 +12,14 @@ https://shahidh7-sem1.herokuapp.com/
 ## Stages complete
 
 ### Stage 1.
-1. Home screen.
-2. Create event.
-3. Currently working on: Displaying event details.
-4. Currently working on: Adding items to list.
-5. Currently working on: Pledging items.
+1. Done: Home screen.
+2. Done: Create event.
+3. Done: Displaying event details. 
+4. Done: Adding items to event.
+5. Pledging items.
 
 ### Stage 2.
-1. Next: Allow more than/less than 5 items per event.
+1. Done: Allow more than/less than 5 items per event.
 2. Next: Send email to owner when item has been pledged.
 3. Next: Allow the list owner to thank the donor via email.
 

@@ -1,0 +1,44 @@
+
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Item Details</title>
+		<meta name="description" content="View details of item">
+		<meta name="author" content="Humza Shahid">
+		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+		<script type="module" src="{{host}}/main.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Item Details</h1>
+			{{#if authorised}}
+				<a href="/logout">Log out</a>
+			{{else}}
+				<a href="/login">Log in</a>
+			{{/if}}
+		</header>
+		{{#if msg}}
+ 			<aside>
+				<p class="msg">{{msg}}</p>
+			</aside>
+		{{/if}}
+	<main>
+		<h2>{{item.name}}</h2>
+		<img src="{{host}}/uploads/items/{{item.image}}">
+		{{#if item.pledged}}
+		<p>Item has been pledged by {{item.user}}</p>
+		{{else}}
+				{{#if owner}}<p>Waiting for pledge...</p>
+		{{else}}
+		<form method="post" action="/sendpledge/{{item.id}}">
+			<input type="submit" value="Pledge item"/>
+		</form>{{/if}}
+		{{/if}}
+	</main>
+		<footer>
+			<button><a href="{{item.link}}">Buy for £{{item.price}}</a></button>
+		</footer>
+	</body>
+</html>

@@ -119,3 +119,83 @@ test('GET EVENT : integer id is out of range', async test => {
 		event.close()
 	}
 })
+
+test('EVENT BY : event is created by specified user', async test => {
+	test.plan(1)
+	const event = await new Events() // no database specified so runs in-memory
+	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg', 1)
+	try {
+		const result = await event.eventBy(1,1) //userid, eventid
+		test.is(result, true)
+	} catch(err) {
+		test.fail('error thrown')
+	} finally {
+		event.close()
+	}
+})
+
+test('EVENT BY : event is NOT created by specified user', async test => {
+	test.plan(1)
+	const event = await new Events() // no database specified so runs in-memory
+	await event.newEvent('my event', 'event description', '2020-12-25 23:40:12:001', 'image.jpg', 1)
+	try {
+		const result = await event.eventBy(2,1) //userid, eventid
+		test.is(result, false)
+	} catch(err) {
+		test.fail('error thrown')
+	} finally {
+		event.close()
+	}
+})
+
+test('EVENT BY : userID blank', async test => {
+	test.plan(1)
+	const event = await new Events()
+	try {
+		await event.eventBy('',1)
+		test.fail('error not thrown')
+	} catch(err) {
+		test.is(err.message, 'missing field', 'incorrect error message')
+	} finally {
+		event.close()
+	}
+})
+
+test('EVENT BY : eventID blank', async test => {
+	test.plan(1)
+	const event = await new Events()
+	try {
+		await event.eventBy(1,'')
+		test.fail('error not thrown')
+	} catch(err) {
+		test.is(err.message, 'missing field', 'incorrect error message')
+	} finally {
+		event.close()
+	}
+})
+
+test('EVENT BY : userID blank or not valid', async test => {
+	test.plan(1)
+	const event = await new Events()
+	try {
+		await event.eventBy('one',1)
+		test.fail('error not thrown')
+	} catch(err) {
+		test.is(err.message, 'userID must be a number', 'incorrect error message')
+	} finally {
+		event.close()
+	}
+})
+
+test('EVENT BY : eventID blank or not valid', async test => {
+	test.plan(1)
+	const event = await new Events()
+	try {
+		await event.eventBy(1,'one')
+		test.fail('error not thrown')
+	} catch(err) {
+		test.is(err.message, 'eventID must be a number', 'incorrect error message')
+	} finally {
+		event.close()
+	}
+})
