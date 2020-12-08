@@ -1,6 +1,5 @@
 
 import Router from 'koa-router'
-import fs from 'fs-extra'
 
 const router = new Router()
 
@@ -61,33 +60,6 @@ router.post('/register', async ctx => {
 router.get('/login', async ctx => {
 	console.log(ctx.hbs)
 	await ctx.render('login', ctx.hbs)
-})
-
-router.get('/newevent', async ctx => {
-	console.log(ctx.hbs)
-	await ctx.render('newevent', ctx.hbs)
-})
-
-router.post('/newevent', async ctx => {
-	const event = await new Events(dbName)
-	ctx.hbs.body = ctx.request.body
-	try {
-		//copy image into correct directory
-		const body = ctx.request.body
-		const image = ctx.request.files.image
-		fs.copy(image.path, `public/uploads/${image.name}`)
-		//date to appropriate format
-		const date = new Date(body.date).toLocaleDateString()
-		await event.newEvent(body.title, body.description, date, image.name, ctx.session.authorised)
-		const referrer = body.referrer || '/'
-		return ctx.redirect(`${referrer}?msg=event added successfully...`)
-	} catch(err) {
-		console.log(err)
-		ctx.hbs.msg = err.message
-		await ctx.render('error', ctx.hbs)
-	} finally {
-		await event.close()
-	}
 })
 
 router.post('/login', async ctx => {

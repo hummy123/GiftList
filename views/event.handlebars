@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<header>
-			<h1>Home</h1>
+			<h1>{{title}}</h1>
 			{{#if authorised}}
 				<a href="/logout">Log out</a>
 			{{else}}
@@ -25,20 +25,23 @@
 			</aside>
 		{{/if}}
 	<main>
+		<h2>{{date}}</h2>
+		<p>{{description}}</p>
+		<img src="{{host}}/uploads/{{image}}">
+		
 		<section>
-			<p>Item wishlist:</p>
-		{{#each items}}
+			{{#each item}}
 			<figure>
 				<img src="{{host}}/uploads/{{this.image}}">
 				<figcaption>{{this.title}} <br /> {{this.date}}</figcaption>
 			</figure>
-		</a>
-		{{/each}}
-			</section>
+			{{/each}}
+		</section>
+		
 	</main>
 		<footer>
 			{{#if authorised}}
-			<p><button><a href="/newevent">Register new event</a></button></p>
+			<p><button id="add"><a href="/newitem">Add an item</a></button></p>
 			{{/if}}
 		</footer>
 	</body>

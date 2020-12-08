@@ -81,14 +81,11 @@ p, legend {
 main {
 	max-width: 60%;
 	margin: auto;
+	text-align: center;
 	margin-top: 2em;
 	padding: 2em;
 	box-sizing: border-box;
 	background-color: lightgray;
-	display: flex;
-	flex-wrap: wrap;
- 	justify-content: space-evenly;
-
 }
 
 input, textarea {
@@ -129,11 +126,22 @@ main a:hover {
 }
 
 section {
-	background-color: #DDD;
-	width: 24vw;
+	width: 100%;
 	margin-top: 1vw;
 	padding: 1vw;
 	border-radius: 1vw;
+	display: flex;
+	flex-wrap: wrap;
+ 	justify-content: space-evenly;
+}
+section a {
+	text-decoration: none;
+	color: black;
+}
+
+section > a:hover {
+	color: red;
+	text-decoration: none;`
 }
 
 section > p {
@@ -190,6 +198,27 @@ input[type="submit"], .button, header > a, body > a, .custom-file-upload {
   display: inline-block;
 	font-size: 1.5vw;
 	/* border-radius: 0.6vw; */
+}
+
+button{
+	background-color: grey;
+  border: 2px solid grey;
+  color: white;
+	padding: 0.4vw 0.8vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+	font-size: 1.5vw;
+}
+
+button a {
+	text-decoration: none;
+	color: white;
+}
+
+button a: hover {
+	color: grey;
+  background-color: white;
 }
 
 input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover, .add:hover {
@@ -289,7 +318,7 @@ figure {
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 	overflow: hidden;
-	background-color: rgb(219,219,219);
+	background-color: #DDD;
 	box-shadow: 3px 3px 22px -7px rgba(0,0,0,0.75);
 }
 

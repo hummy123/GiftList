@@ -1,46 +1,30 @@
 
-# Assignment Code
+# Heroku server link
 
-This is the template code that you will need to use as a starting point for your coursework.
+https://shahidh7-sem1.herokuapp.com/
 
-You should make sure you are accessing Codio using a standards-compliant web browser such as **Google Chrome** or **Chromium**.
+## Accounts and passwords
 
-## Running Your Server
+1. user1 p455w0rd
+2. user2 p455w0rd
+3. user3 p455w0rd
 
-All the core packages have already been installed so all you need to do to get your server running is to open the **terminal** from the **Tools** menu (if it is not already open) and run the following command:
+## Stages complete
 
-```shell
-$ node index.js
-```
+### Stage 1.
+1. Home screen.
+2. Create event.
+3. Currently working on: Displaying event details.
+4. Currently working on: Adding items to list.
+5. Currently working on: Pledging items.
 
-This will start your web server. To view your website click on the dropdown list labelled **Live Site** at the top of the Codio window and choose the **New browser tab** option. This will open your website in a new tab.
+### Stage 2.
+1. Next: Allow more than/less than 5 items per event.
+2. Next: Send email to owner when item has been pledged.
+3. Next: Allow the list owner to thank the donor via email.
 
-To make life easier you can split your editor window both horizontally and/or vertically so you can see both the code and the terminal. Use the **View > Panels** and **View > Layout** menus.
+### Stage 3.
 
-## Setting up a Git Repository
-
-As part of the assignment you are expected to make regular commits to your git repository. Follow this step by step guide:
-
-### Local Config Settings
-
-Before you make any commits you need to update the [local config settings](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup). Start by using the Terminal (or Git Bash on Windows) navigate inside the project. Once you are in this directory run the following commands, substituting you name as it appears on your ID badge and your university email address (without the `uni.` domain prefix).
-
-```bash
-git config user.name 'John Doe'
-git config user.email 'doej@coventry.ac.uk'
-```
-
-### Create a New Remote Repository
-
-1. Log onto the [University GitHub server](https://github.coventry.ac.uk) using your University username and password.
-2. Your assignment brief will give you the _organisation url_, this will take you to the module page on GitHub.
-3. Create a new repository using the green **New** button:
-    1. The name of the repository should be your university username, eg. `doej` and should include the suffix of either `-sem1`, `-sem2` or `-sem3` depending on which semester you are taking the assignment in, eg. `doej-sem1`.
-    2. The description should be the topic you were assigned (eg. **Customer Relationship Manager**).
-    3. The repository should be **private**.
-4. Now follow the instructions git provides under the heading **create a new repository on the command line**.
-    1. Don't run the first `echo` command as this will delete these instructions!
-
-## Working With SQLite
-
-The SQLite3 commandline tool is already installed and should be used to configure your database.
+1. Last: Send messages to list owner (displayed on app and sent as email). Messages should be connected to a specific item.
+2. Last: List owner can answer messages. 
+3. Last: Item details screen (also shows questions and answers about items)
