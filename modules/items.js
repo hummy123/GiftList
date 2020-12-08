@@ -18,7 +18,7 @@ class Items {
 			// we need this table to store the items
 			const sql = `CREATE TABLE IF NOT EXISTS items\
 				(id INTEGER PRIMARY KEY AUTOINCREMENT, 
-				name TEXT, price REAL, details TEXT, link TEXT, pledged INTEGER DEFAULT 0,
+				name TEXT, price REAL, image TEXT, link TEXT, pledged INTEGER DEFAULT 0,
 				event_id INTEGER, donor_id INTEGER,
 				FOREIGN KEY(event_id) REFERENCES event(id),
 				FOREIGN KEY(donor_id) REFERENCES users(id));`
@@ -34,19 +34,19 @@ class Items {
 	 * creates a new item
 	 * @param {String} name the name of the item
 	 * @param {String} price how much the item costs in £ gbp
-	 * @param {String} details a short description of the item
+	 * @param {String} image server URL pointing to uploaded image
 	 * @param {String} link a link to buy the item from
 	 * @param {String} eventID to connect the item to an event
 	 * @returns {Boolean} returns true if the new event has been created
 	 */
-	async newItem(name, price, details, link, itemID) {
+	async newItem(name, price, image, link, eventID) {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
 		})
 		/* long line is necessary for query, but eslint throws a warning
 		 * of a rule violation in that case, so split query string */
-		let sql = 'INSERT INTO items(name, price, details, link, event_id)'
-		sql += ` VALUES("${name}", "${price}", "${details}", "${link}", "${itemID}")`
+		let sql = 'INSERT INTO items(name, price, image, link, event_id)'
+		sql += ` VALUES("${name}", "${price}", "${image}", "${link}", "${eventID}")`
 		await this.db.run(sql)
 		return true
 	}
@@ -58,7 +58,9 @@ class Items {
 	 */
 	async getEventItems(eventID) {
 		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
-		const sql = `SELECT * FROM items WHERE event_id=${eventID}`
+		const sql = `SELECT * FROM items WHERE event_id=${eventID}
+					INNER JOIN users ON items.donor_id = users.id
+					WHERE event_id=${eventID}`
 		const result = await this.db.all(sql)
 		if(result === undefined) throw new Error('no items')
 		return result
