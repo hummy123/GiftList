@@ -28,7 +28,7 @@
 		<h2>{{item.name}}</h2>
 		<img src="{{host}}/uploads/items/{{item.image}}">
 		{{#if item.pledged}}
-		<p>Item has been pledged by {{donor.name}}</p>
+		<p>Item has been pledged by {{item.user}}</p>
 		{{else}}
 				{{#if owner}}<p>Waiting for pledge...</p>
 		{{else}}
@@ -38,7 +38,7 @@
 		{{/if}}
 	</main>
 		<footer>
-			<button><a href="{{item.link}}">Buy for {{item.price}}</a></button>
+			<button><a href="{{item.link}}">Buy for £{{item.price}}</a></button>
 		</footer>
 	</body>
 </html>

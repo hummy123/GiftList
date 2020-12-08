@@ -45,7 +45,7 @@ router.get('/item/:id', async ctx => {
 router.post('/sendpledge/:id', async ctx => {
 	const item = await new Items(dbName)
 	const itemID = parseInt(ctx.params.id)
-	const donorID = parseInt(ctx.authorised)
+	const donorID = parseInt(ctx.hbs.authorised)
 	ctx.hbs.body = ctx.request.body
 	try {
 		//call pledge function

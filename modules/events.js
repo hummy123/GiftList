@@ -80,7 +80,6 @@ class Events {
 		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
 		const sql = `SELECT * FROM events
 					WHERE events.id=${eventID} AND creator_id=${userID}`
-		console.log(sql)
 		const result = await this.db.get(sql)
 		if(result === undefined) return false
 		return true
