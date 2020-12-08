@@ -5,6 +5,7 @@ import fs from 'fs-extra'
 const router = new Router()
 
 import Events from '../modules/events.js'
+import Items from '../modules/items.js'
 const dbName = 'website.db'
 
 /**
@@ -43,9 +44,19 @@ router.post('/newevent', async ctx => {
 router.get('/event/:id', async ctx => {
 	const eventID = parseInt(ctx.params.id)
 	const event = await new Events(dbName)
-	const eventDetails = await event.getEvent(eventID)
-	console.log(eventDetails)
-	await ctx.render('event', eventDetails)
+	ctx.hbs.event = await event.getEvent(eventID)
+	await event.close()
+	const item = await new Items(dbName)
+	ctx.hbs.items = await item.getEventItems(eventID)
+	console.log(ctx.hbs)
+	const curUserID = ctx.hbs.authorised
+	const creatorID = ctx.hbs.event.creator_id
+	if(curUserID === creatorID) {
+		ctx.hbs.owner = true
+	} else {
+		ctx.hbs.owner = false
+	}
+	await ctx.render('event', ctx.hbs)
 })
 
 

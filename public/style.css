@@ -25,13 +25,19 @@ header {
 	background-color: #ccc;
 	border-bottom: 5px solid grey;
 	height: 8vw;
+	position: sticky;
+	width: 100%;
+
 }
 
 footer {
 	background-color: #ccc;
-	border-top: 5px solid grey;
-	height: 4vw;
+	border-top: 2px solid grey;
+	height: 3vw;
 	text-align: center;
+	position: sticky;
+	width: 100%;
+	padding: 1vw;
 }
 
 h1, h2, h3 {

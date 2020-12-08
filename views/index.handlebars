@@ -26,9 +26,9 @@
 		{{/if}}
 	<main>
 		<section>
-			<p>Item wishlist:</p>
-		{{#each items}}
-			<figure>
+		{{#each events}}
+			<a href="/event/{{this.id}}">
+			<figure> 
 				<img src="{{host}}/uploads/{{this.image}}">
 				<figcaption>{{this.title}} <br /> {{this.date}}</figcaption>
 			</figure>

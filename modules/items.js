@@ -58,8 +58,7 @@ class Items {
 	 */
 	async getEventItems(eventID) {
 		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
-		const sql = `SELECT * FROM items WHERE event_id=${eventID}
-					INNER JOIN users ON items.donor_id = users.id
+		const sql = `SELECT * FROM items
 					WHERE event_id=${eventID}`
 		const result = await this.db.all(sql)
 		if(result === undefined) throw new Error('no items')
