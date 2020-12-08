@@ -21,13 +21,14 @@ router.get('/newitem/:id', async ctx => {
 
 router.post('/newitem/:id', async ctx => {
 	const item = await new Items(dbName)
+	const eventID = parseInt(ctx.params.id)
 	ctx.hbs.body = ctx.request.body
 	try {
 		//copy image into correct directory
 		const body = ctx.request.body
 		const image = ctx.request.files.image
 		fs.copy(image.path, `public/uploads/items/${image.name}`)
-		await item.newItem(body.name, body.price, image.name, body.link, ctx.session.authorised)
+		await item.newItem(body.name, body.price, image.name, body.link, eventID)
 		const referrer = body.referrer || '/'
 		return ctx.redirect(`${referrer}?msg=item added successfully...`)
 	} catch(err) {
