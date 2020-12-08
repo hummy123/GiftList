@@ -31,10 +31,11 @@
 		
 		<section>
 			{{#each items}}
+			<a href="/item/{{this.id}}">
 			<figure>
 				<img src="{{host}}/uploads/items/{{this.image}}">
 				<figcaption>{{this.name}} <br /> {{this.date}}</figcaption>
-			</figure>
+			</figure></a>
 			{{/each}}
 		</section>
 		

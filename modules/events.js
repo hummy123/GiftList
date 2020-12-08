@@ -66,6 +66,26 @@ class Events {
 		return result
 	}
 
+	/**
+	 * checks if event was created by a specific user
+	 * @param {Number} userID is user to check against
+	 * @param {Number} eventID is event to check against
+	 * @returns {Boolean} returns true if user created; false if not
+	 */
+	async eventBy(userID, eventID) {
+		Array.from(arguments).forEach( val => {
+			if(val.length === 0) throw new Error('missing field')
+		})
+		if(typeof userID !== 'number') throw new Error('userID must be a number')
+		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
+		const sql = `SELECT * FROM events
+					WHERE events.id=${eventID} AND creator_id=${userID}`
+		console.log(sql)
+		const result = await this.db.get(sql)
+		if(result === undefined) return false
+		return true
+	}
+
 	async close() {
 		await this.db.close()
 	}

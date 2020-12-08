@@ -30,9 +30,11 @@
 		{{#if item.pledged}}
 		<p>Item has been pledged by {{donor.name}}</p>
 		{{else}}
-		<form method="post" action="/sendpledge/{{id}}">
+				{{#if owner}}<p>Waiting for pledge...</p>
+		{{else}}
+		<form method="post" action="/sendpledge/{{item.id}}">
 			<input type="submit" value="Pledge item"/>
-		</form>
+		</form>{{/if}}
 		{{/if}}
 	</main>
 		<footer>
