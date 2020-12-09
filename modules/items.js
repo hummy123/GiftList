@@ -2,6 +2,7 @@
 /** @module Items */
 
 import sqlite from 'sqlite-async'
+import sendMail from './mail.js'
 
 /**
  * Events
@@ -91,6 +92,48 @@ class Items {
 					WHERE id=${itemID}`
 		console.log(sql)
 		await this.db.run(sql)
+		await this.notifyPledge(itemID, donorID)
+		return true
+	}
+
+	/**
+	 * retrieves various db info and constructs/sends message to notify of pledge
+	 * @param {Number} itemID the item's primary key
+	 * @param {Number} donorID identifies donor who made pledge
+	 * @returns {Boolean} returns true if removal successful
+	 */
+	async notifyPledge(itemID, donorID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${donorID}`
+		const results = await this.db.run(sql)
+		const recipient = results.email
+		const subject = `An item has been pledged to you by ${results.user}!`
+		const message = `Hi there\n\n
+						You have just received a pledge for an item on your wishlist by ${results.user}, 
+						${results.name} costing £${results.price}!
+						 \n\nProduct details: ${results.link}\n\n
+						Visit https://shahidh7-sem1.herokuapp.com/ to thank them!`
+		sendMail(recipient, subject, message)
+		return true
+	}
+
+	/**
+	 * retrieves various db info and constructs/sends a message to thank donor of pledge
+	 * @param {Number} itemID the item's primary key
+	 * @param {Number} donorID identifies donor who made pledge
+	 * @returns {Boolean} returns true if removal successful
+	 */
+	async sendThanks(itemID, creatorID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${creatorID}`
+		const results = await this.db.run(sql)
+		const recipient = results.email
+		const subject = `Tiy have been thanked by ${results.user} for your pledge!`
+		const message = `Hi there\n\n
+						We just wanted to let you know that ${results.user} has seen
+						the pledge you kindly placed for ${results.name} and 
+						wanted to express gratitude for it. Thank you!
+						 \n\nProduct details: ${results.link}\n\n
+						Events accessible from https://shahidh7-sem1.herokuapp.com/!`
+		sendMail(recipient, subject, message)
 		return true
 	}
 
