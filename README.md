@@ -16,12 +16,12 @@ https://shahidh7-sem1.herokuapp.com/
 2. Done: Create event.
 3. Done: Displaying event details. 
 4. Done: Adding items to event.
-5. Pledging items.
+5. Done: Pledging items.
 
 ### Stage 2.
-1. Done: Allow more than/less than 5 items per event.
-2. Next: Send email to owner when item has been pledged.
-3. Next: Allow the list owner to thank the donor via email.
+1. Done: Allowing more than/less than 5 items per event.
+2. Done: Send email to owner when item has been pledged.
+3. Done: Allow the list owner to thank the donor via email.
 
 ### Stage 3.
 
