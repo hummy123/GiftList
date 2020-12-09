@@ -27,4 +27,4 @@ https://shahidh7-sem1.herokuapp.com/
 
 1. Last: Send messages to list owner (displayed on app and sent as email). Messages should be connected to a specific item.
 2. Last: List owner can answer messages. 
-3. Last: Item details screen (also shows questions and answers about items)
+3. Mostly done: Item details screen (need to show questions and answers about items)

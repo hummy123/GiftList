@@ -18,7 +18,7 @@ class Messages {
 			// we need this table to store the messages
 			const sql = `CREATE TABLE IF NOT EXISTS messages\
 				(id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer TEXT,
-				event_id INTEGER, FOREIGN KEY(event_id) REFERENCES event(id));`
+				item_id INTEGER, FOREIGN KEY(item_id) REFERENCES item(id));`
 			await this.db.run(sql)
 			return this
 		})()
@@ -27,15 +27,15 @@ class Messages {
 	/**
 	 * creates a new question
 	 * @param {String} question what the user asks
-	 * @param {Number} eventID the event linked to the question
+	 * @param {Number} itemID the item linked to the question
 	 * @returns {Boolean} returns true if message created successfully
 	 */
-	async ask(question, eventID) {
+	async ask(question, itemID) {
 		Array.from(arguments).forEach( val => {
 			if(val.length === 0) throw new Error('missing field')
 		})
-		if (typeof eventID !== 'number') throw new Error('event ID must be a number')
-		const sql = `INSERT INTO messages(question, event_id) VALUES("${question}", "${eventID}")`
+		if (typeof itemID !== 'number') throw new Error('item ID must be a number')
+		const sql = `INSERT INTO messages(question, item_id) VALUES("${question}", "${itemID}")`
 		await this.db.run(sql)
 		return true
 	}

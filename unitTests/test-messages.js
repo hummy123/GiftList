@@ -28,7 +28,7 @@ test('NEW MESSAGE : missing question', async test => {
 	}
 })
 
-test('NEW MESSAGE : missing event ID', async test => {
+test('NEW MESSAGE : missing item ID', async test => {
 	test.plan(1)
 	const message = await new Messages() // no database specified so runs in-memory
 	try {
@@ -41,14 +41,14 @@ test('NEW MESSAGE : missing event ID', async test => {
 	}
 })
 
-test('NEW MESSAGE : event id not a number', async test => {
+test('NEW MESSAGE : item id not a number', async test => {
 	test.plan(1)
 	const message = await new Messages() // no database specified so runs in-memory
 	try {
 		await message.ask('test question', 'one')
 		test.fail('error not thrown')
 	} catch(err) {
-		test.is(err.message, 'event ID must be a number')
+		test.is(err.message, 'item ID must be a number')
 	} finally {
 		message.close()
 	}
