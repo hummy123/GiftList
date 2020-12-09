@@ -36,7 +36,7 @@ footer {
 	height: 3vw;
 	text-align: center;
 	position: sticky;
-	width: 100%;
+	width: 98%;
 	padding: 1vw;
 }
 
@@ -194,7 +194,7 @@ input:focus {
 	display: none;
 } */
 
-input[type="submit"], .button, header > a, body > a, .custom-file-upload {
+input[type="submit"], button, .button, header > a, body > a, .custom-file-upload {
   background-color: grey;
   border: 2px solid grey;
   color: white;
@@ -206,28 +206,12 @@ input[type="submit"], .button, header > a, body > a, .custom-file-upload {
 	/* border-radius: 0.6vw; */
 }
 
-button{
-	background-color: grey;
-  border: 2px solid grey;
-  color: white;
-	padding: 0.4vw 0.8vw;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-	font-size: 1.5vw;
-}
-
 button a {
 	text-decoration: none;
 	color: white;
 }
 
-button a: hover {
-	color: grey;
-  background-color: white;
-}
-
-input[type="submit"]:hover, header > a:hover, .custom-file-upload:hover, .add:hover {
+input[type="submit"]:hover, button:hover, header > a:hover, .custom-file-upload:hover, .add:hover {
   color: grey;
   background-color: white;
 }
