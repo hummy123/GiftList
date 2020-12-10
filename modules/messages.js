@@ -2,6 +2,7 @@
 /** @module Messages */
 
 import sqlite from 'sqlite-async'
+import sendMail from './mail.js'
 
 /**
  * Messages
@@ -18,7 +19,9 @@ class Messages {
 			// we need this table to store the messages
 			const sql = `CREATE TABLE IF NOT EXISTS messages\
 				(id INTEGER PRIMARY KEY AUTOINCREMENT, summary TEXT, question TEXT, answer TEXT,
-				item_id INTEGER, FOREIGN KEY(item_id) REFERENCES item(id));`
+				item_id INTEGER, asker_id INTEGER ,
+				FOREIGN KEY(item_id) REFERENCES items(id)
+				FOREIGN KEY(asker_id) REFERENCES users(id));`
 			await this.db.run(sql)
 			return this
 		})()
@@ -39,6 +42,27 @@ class Messages {
 		const sql = `INSERT INTO messages(summary, question, item_id) 
 					VALUES("${summary}", "${question}", "${itemID}")`
 		await this.db.run(sql)
+		await this.askEmail(summary, question, itemID)
+		return true
+	}
+
+	/**
+	 * sends an email about the question being asked
+	 * @param {String} summary a brief description of the question
+	 * @param {String} question the text of the question in full
+	 * @param {Number} itemID the item being asked about
+	 * @returns {Boolean} returns true if question successfully asked
+	 */
+	async askEmail(summary, question, itemID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID}`
+		const results = await this.db.get(sql)
+		const recipient = results.email
+		const subject = `Item wishlist question: ${summary}`
+		const message = `\nHi there\n
+						You have just received a question about an item on your wishlist.
+						 \nQuestion: ${question} Product details: ${results.link}\n
+						Visit https://shahidh7-sem1.herokuapp.com/ to answer!`
+		sendMail(recipient, subject, message)
 		return true
 	}
 
@@ -55,6 +79,34 @@ class Messages {
 		if (typeof messageID !== 'number') throw new Error('messageID must be a number')
 		const sql = `UPDATE messages SET answer="${answer}" WHERE id=${messageID}`
 		await this.db.run(sql)
+		await this.answerEmail(messageID)
+		return true
+	}
+
+	/**
+	 * sends an email to person who asked question
+	 * @param {String} summary a brief description of the question
+	 * @param {String} question the text of the question in full
+	 * @param {Number} itemID the item being asked about
+	 * @returns {Boolean} returns true if question successfully asked
+	 */
+	async answerEmail(messageID) {
+		//get user who asked question (so we can get their email)
+		let sql = `SELECT * from users, messages WHERE messages.id=${messageID}`
+		let results = await this.db.get(sql)
+		const recipient = results.email
+		const question = results.question
+		const answer = results.answer
+		//get link for the item the question is about
+		sql = `SELECT * FROM items, messages WHERE message.id=${messageID}`
+		results = await this.db.get(sql)
+		const subject = 'You have received an answer to your question!'
+		const message = `\nHi there\n
+						You have just received an answer in response to a question you asked.
+						\nYour question: ${question}
+						 \nAnswer: ${answer}\nProduct link: ${results.link}
+						\nVisit https://shahidh7-sem1.herokuapp.com/ to act!`
+		sendMail(recipient, subject, message)
 		return true
 	}
 
