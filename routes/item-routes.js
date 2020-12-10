@@ -6,6 +6,7 @@ const router = new Router()
 
 import Items from '../modules/items.js'
 import Events from '../modules/events.js'
+import Messages from '../modules/messages.js'
 const dbName = 'website.db'
 
 /**
@@ -26,17 +27,22 @@ router.get('/item/:id', async ctx => {
 	const item = await new Items(dbName)
 	const curItem = await item.getItem(itemID)
 	ctx.hbs.item = curItem
+	ctx.hbs.item.id = itemID
 	await item.close()
 
 	//check if currently logged in user made event
 	const userID = parseInt(ctx.hbs.authorised)
 	const eventID = curItem.event_id
-	console.log(curItem)
-	console.log(userID)
 	const event = await new Events(dbName)
 	ctx.hbs.owner = await event.eventBy(userID, eventID)
 	await event.close()
 
+	//retrieve questions about item
+	const message = await new Messages(dbName)
+	ctx.hbs.messages = await message.getMessages(itemID)
+	await message.close()
+	console.log(`messages: ${ctx.hbs.messages}`)
+	
 	//send data to template
 	console.log(ctx.hbs)
 	await ctx.render('itemdetails', ctx.hbs)

@@ -43,6 +43,22 @@
 		{{/if}}
 		{{/if}}
 		{{/if}}
+		<table>
+		<tr><th>Question</th><th>Answer</th>
+		</tr>
+			{{#each messages}}
+				<tr> 
+					<td>{{this.question}}</td>
+					<td>
+					{{#if this.answer}}
+						{{this.answer}}
+					{{else}}
+						<a href="answer/{{this.id}}">Click to Answer</a>
+					{{/if}}
+					</td>
+				</tr>
+			{{/each}}
+		</table>
 	</main>
 		<footer>
 			<a href="{{item.link}}"><button>Buy for £{{item.price}}</button></a>

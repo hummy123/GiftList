@@ -66,8 +66,8 @@ class Messages {
 	async getMessages(itemID) {
 		if(typeof itemID !== 'number') throw new Error('itemID must be a number')
 		const sql = `SELECT * FROM messages WHERE item_id=${itemID}`
-		const result = await this.db.get(sql)
-		if(result === undefined) throw new Error('no messages')
+		const result = await this.db.all(sql)
+		if(result === undefined) return null
 		return result
 	}
 	

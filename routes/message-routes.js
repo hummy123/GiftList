@@ -18,12 +18,28 @@ router.get('/ask/:id', async ctx => {
 	const itemID = parseInt(ctx.params.id)
 	const item = await new Items(dbName)
 	ctx.hbs.item = await item.getItem(itemID)
+	ctx.hbs.item.id = itemID
 	console.log(ctx.hbs)
 	await ctx.render('ask', ctx.hbs)
 })
 
 router.post('/ask/:id', async ctx => {
-	//call memssage-ask function here and do the data handling
+	const message = await new Messages(dbName)
+	const itemID = parseInt(ctx.params.id)
+	ctx.hbs.body = ctx.request.body
+	try {
+		const body = ctx.request.body
+		//create new message
+		await message.ask(body.subject, body.question, itemID)
+		const referrer = body.referrer || '/'
+		return ctx.redirect(`${referrer}?msg=question sent succsessfully...`)
+	} catch(err) {
+		console.log(err)
+		ctx.hbs.msg = err.message
+		await ctx.render('error', ctx.hbs)
+	} finally {
+		await message.close()
+	}
 })
 
 router.get('/answer/:id', async ctx => {

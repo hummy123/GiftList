@@ -275,6 +275,7 @@ dd {
 table {
 	border-collapse: collapse;
 	margin: auto;
+	width: 50%;
 }
 
 table img {
