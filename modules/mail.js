@@ -24,10 +24,10 @@ export default function sendMail(recipient, mailSubject, message) {
 		to: recipient, subject: mailSubject, text: message
 	}
 	const giftmailer = nodemailer.createTransport({
-		service: 'Outlook365',
+		service: 'gmail',
 		auth: {
-			user: 'shahidh7@uni.coventry.ac.uk',
-			pass: '1qaz!QAZ'
+			user: '340ctGiftList@gmail.com',
+			pass: '340CT_Com_Sci'
 		}
 	})
 	giftmailer.sendMail(mailTemplate, (err) => {

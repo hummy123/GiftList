@@ -90,7 +90,6 @@ class Items {
 		const sql = `UPDATE items 
 					SET pledged = 1, donor_id=${donorID}
 					WHERE id=${itemID}`
-		console.log(sql)
 		await this.db.run(sql)
 		await this.notifyPledge(itemID, donorID)
 		return true
@@ -102,15 +101,15 @@ class Items {
 	 * @param {Number} donorID identifies donor who made pledge
 	 * @returns {Boolean} returns true if removal successful
 	 */
-	async notifyPledge(itemID, creatorID) {
-		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${creatorID}`
-		const results = await this.db.run(sql)
+	async notifyPledge(itemID, donorID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${donorID}`
+		const results = await this.db.get(sql)
 		const recipient = results.email
 		const subject = `An item has been pledged to you by ${results.user}!`
-		const message = `Hi there\n\n
+		const message = `\nHi there\n
 						You have just received a pledge for an item on your wishlist by ${results.user}, 
 						${results.name} costing £${results.price}!
-						 \n\nProduct details: ${results.link}\n\n
+						 \nProduct details: ${results.link}\n
 						Visit https://shahidh7-sem1.herokuapp.com/ to thank them!`
 		sendMail(recipient, subject, message)
 		return true

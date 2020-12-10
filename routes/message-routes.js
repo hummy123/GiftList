@@ -57,7 +57,7 @@ router.post('/answer/:id', async ctx => {
 		//update message with answer
 		await message.answer(body.answer, messageID)
 		const referrer = body.referrer || '/'
-		return ctx.redirect(`${referrer}?msg=question sent succsessfully...`)
+		return ctx.redirect(`${referrer}?msg=answer sent succsessfully...`)
 	} catch(err) {
 		console.log(err)
 		ctx.hbs.msg = err.message

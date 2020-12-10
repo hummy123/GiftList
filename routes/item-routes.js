@@ -97,7 +97,7 @@ router.post('/sendThanks/:id', async ctx => {
 		//call thanks function
 		await item.thankDonor(itemID, curItem.donor_id)
 		const referrer = body.referrer || '/'
-		return ctx.redirect(`${referrer}?msg=item added successfully...`)
+		return ctx.redirect(`${referrer}?msg=sent thank you to donor successfully...`)
 	} catch(err) {
 		console.log(err)
 		ctx.hbs.msg = err.message
