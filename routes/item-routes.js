@@ -91,7 +91,7 @@ router.post('/newitem/:id', async ctx => {
 router.post('/sendThanks/:id', async ctx => {
 	const item = await new Items(dbName)
 	const itemID = parseInt(ctx.params.id)
-	const curItem = await item.getItem(itemID) //this line enables access to donor id 
+	const curItem = await item.getItem(itemID) //this line enables access to donor id
 	const body = ctx.request.body
 	try {
 		//call thanks function

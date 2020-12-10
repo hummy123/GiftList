@@ -117,10 +117,10 @@ class Items {
 	}
 
 	/**
-	 * stores on system that creator has received pledge and thanks donor 
+	 * stores on system that creator has received pledge and thanks donor
 	 * @param {Number} itemID the item the list owner is thanking for
 	 * @param {Number} creatorID identifies the list owner
-	 * @returns {Boolean} returns true if successfully record on 
+	 * @returns {Boolean} returns true if successfully record on
 	 */
 	async thankDonor(itemID, donorID) {
 		const sql = `UPDATE items SET thanks = 1 WHERE id=${itemID}`
@@ -128,7 +128,7 @@ class Items {
 		await this.thanksMessage(itemID, donorID)
 		return true
 	}
-	
+
 	/**
 	 * retrieves various db info and constructs/sends a message to thank donor of pledge
 	 * @param {Number} itemID the item's primary key
