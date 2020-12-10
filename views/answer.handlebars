@@ -1,0 +1,36 @@
+
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Answer Question</title>
+		<meta name="description" content="form to ask questions about items">
+		<meta name="author" content="Humza Shahid">
+		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
+		<script type="module" src="{{host}}/main.js"></script>
+	</head>
+	<body>
+		<header>
+			<h1>Answer question</h1>
+			{{#if authorised}}
+				<a href="/logout">Log out</a>
+			{{else}}
+				<a href="/login">Log in</a>
+			{{/if}}
+		</header>
+		{{#if msg}}
+ 			<aside>
+				<p class="msg">{{msg}}</p>
+			</aside>
+		{{/if}}
+	<main>
+		<form method="post" enctype="multipart/form-data" action="/answer/{{message.id}}">
+			<p>{{message.summary}}</p>
+			<p>{{message.question}}</p>
+			<label>Your answer: <textarea name="answer"></textarea> </label>
+			<input type="submit" />
+		</form>
+	</main>
+	</body>
+</html>

@@ -32,13 +32,36 @@
 		{{else}}
 				{{#if owner}}<p>Waiting for pledge...</p>
 		{{else}}
-		<form method="post" action="/sendpledge/{{item.id}}">
-			<input type="submit" value="Pledge item"/>
-		</form>{{/if}}
+				{{#if authorised}}
+		<section>
+		<a href="/sendpledge/{{item.id}}">
+			<button>Pledge item</button>
+		</a>
+		<a href="/ask/{{item.id}}">
+			<button>Ask a question</button>
+		</a></section>
 		{{/if}}
+		{{/if}}
+		{{/if}}
+		<table>
+		<tr><th>Question</th><th>Answer</th>
+		</tr>
+			{{#each messages}}
+				<tr> 
+					<td>{{this.summary}}</td>
+					<td>
+					{{#if this.answer}}
+						{{this.answer}}
+					{{else}}
+						<a href="/answer/{{this.id}}">Click to Answer</a>
+					{{/if}}
+					</td>
+				</tr>
+			{{/each}}
+		</table>
 	</main>
 		<footer>
-			<button><a href="{{item.link}}">Buy for £{{item.price}}</a></button>
+			<a href="{{item.link}}"><button>Buy for £{{item.price}}</button></a>
 		</footer>
 	</body>
 </html>

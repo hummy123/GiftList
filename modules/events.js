@@ -78,6 +78,8 @@ class Events {
 		})
 		if(typeof userID !== 'number') throw new Error('userID must be a number')
 		if(typeof eventID !== 'number') throw new Error('eventID must be a number')
+		//don't throw error if user is not logged in, but return false instead
+		if(Number.isNaN(userID)) return false
 		const sql = `SELECT * FROM events
 					WHERE events.id=${eventID} AND creator_id=${userID}`
 		const result = await this.db.get(sql)
