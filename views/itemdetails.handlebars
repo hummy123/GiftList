@@ -29,19 +29,19 @@
 		<img src="{{host}}/uploads/items/{{item.image}}">
 		{{#if item.pledged}}
 		<p>Item has been pledged by {{item.user}}</p>
-		{{else}}
-				{{#if owner}}<p>Waiting for pledge...</p>
-		{{else}}
-				{{#if authorised}}
+		{{else if owner}}
+				<p>Waiting for pledge...</p>
+		{{else if authorised}}
 		<section>
 		<a href="/sendpledge/{{item.id}}">
-			<button>Pledge item</button>
+			<form method="post" action="/sendpledge/{{item.id}}">
+				<input type="submit" value="Pledge Item" />
+			</form>
+			
 		</a>
 		<a href="/ask/{{item.id}}">
 			<button>Ask a question</button>
 		</a></section>
-		{{/if}}
-		{{/if}}
 		{{/if}}
 		<table>
 		<tr><th>Question</th><th>Answer</th>
@@ -52,8 +52,10 @@
 					<td>
 					{{#if this.answer}}
 						{{this.answer}}
-					{{else}}
+					{{else if ../owner}}
 						<a href="/answer/{{this.id}}">Click to Answer</a>
+					{{else}}
+						No answer yet.
 					{{/if}}
 					</td>
 				</tr>
