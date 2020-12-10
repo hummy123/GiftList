@@ -65,7 +65,7 @@ class Messages {
 		sendMail(recipient, subject, message)
 		return true
 	}
-	
+
 	/**
 	 * answers an existing question
 	 * @param {String} answer the response given by list owner
@@ -82,7 +82,7 @@ class Messages {
 		await this.answerEmail(messageID)
 		return true
 	}
-	
+
 	/**
 	 * sends an email to person who asked question
 	 * @param {String} summary a brief description of the question
@@ -100,7 +100,7 @@ class Messages {
 		//get link for the item the question is about
 		sql = `SELECT * FROM items, messages WHERE message.id=${messageID}`
 		results = await this.db.get(sql)
-		const subject = `You have received an answer to your question!`
+		const subject = 'You have received an answer to your question!'
 		const message = `\nHi there\n
 						You have just received an answer in response to a question you asked.
 						\nYour question: ${question}

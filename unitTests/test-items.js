@@ -193,4 +193,5 @@ test.serial.beforeEach(async t => {
 	const account = await new Accounts('item-test.db')
 	await account.register('doej', 'password', 'doej@gmail.com')
 	account.close()
+	console.log(t)
 })

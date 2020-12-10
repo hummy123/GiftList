@@ -13,7 +13,7 @@ import fs from 'fs'
 test.serial('NEW MESSAGE : ask question successfully', async test => {
 	test.plan(1)
 	// using real file for same reason explained in test-items.js
-	const message = await new Messages('test-messages.db') 
+	const message = await new Messages('test-messages.db')
 	try {
 		const result = await message.ask('summary', 'test question', 1)
 		test.is(result, true)
@@ -173,4 +173,5 @@ test.serial.beforeEach(async t => {
 	const item = await new Items('test-messages.db')
 	await item.newItem('umbrella', 12.5, 'image.jpg', 'https://tinyurl.com/yyyvpepn', 1)
 	item.close()
+	console.log(t)
 })
