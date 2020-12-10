@@ -136,15 +136,15 @@ class Items {
 	 */
 	async thanksMessage(itemID, donorID) {
 		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${donorID}`
-		const results = await this.db.run(sql)
+		const results = await this.db.get(sql)
 		const recipient = results.email
 		const subject = `You have been thanked by ${results.user} for your pledge!`
-		const message = `Hi there\n\n
+		const message = `Hi there\n
 						We just wanted to let you know that ${results.user} has seen
 						the pledge you kindly placed for ${results.name} and 
 						wanted to express gratitude for it. Thank you!
-						 \n\nProduct details: ${results.link}\n\n
-						Events accessible from https://shahidh7-sem1.herokuapp.com/!`
+						 \nProduct details: ${results.link}\n
+						Events accessible from https://shahidh7-sem1.herokuapp.com/`
 		sendMail(recipient, subject, message)
 		return true
 	}
