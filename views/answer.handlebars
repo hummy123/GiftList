@@ -4,15 +4,15 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Home Page</title>
-		<meta name="description" content="form to answer specific question">
+		<title>Answer Question</title>
+		<meta name="description" content="form to ask questions about items">
 		<meta name="author" content="Humza Shahid">
 		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
 		<script type="module" src="{{host}}/main.js"></script>
 	</head>
 	<body>
 		<header>
-			<h1>Answer a question</h1>
+			<h1>Answer question</h1>
 			{{#if authorised}}
 				<a href="/logout">Log out</a>
 			{{else}}
@@ -25,8 +25,8 @@
 			</aside>
 		{{/if}}
 	<main>
-		<form method="post" enctype="multipart/form-data" action="/answer/{{item.id}}">
-			<h3>{{message.subject}}</h3>
+		<form method="post" enctype="multipart/form-data" action="/answer/{{message.id}}">
+			<p>{{message.summary}}</p>
 			<p>{{message.question}}</p>
 			<label>Your answer: <textarea name="answer"></textarea> </label>
 			<input type="submit" />

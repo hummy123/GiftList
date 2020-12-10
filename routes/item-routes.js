@@ -42,7 +42,7 @@ router.get('/item/:id', async ctx => {
 	ctx.hbs.messages = await message.getMessages(itemID)
 	await message.close()
 	console.log(`messages: ${ctx.hbs.messages}`)
-	
+
 	//send data to template
 	console.log(ctx.hbs)
 	await ctx.render('itemdetails', ctx.hbs)

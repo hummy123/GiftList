@@ -1,7 +1,5 @@
 
 import Router from 'koa-router'
-import fs from 'fs-extra'
-
 const router = new Router()
 
 import Items from '../modules/items.js'
@@ -9,7 +7,7 @@ import Messages from '../modules/messages.js'
 const dbName = 'website.db'
 
 /**
- * Page to ask item about item.
+ * Page to ask question about item.
  *
  * @name Ask Question
  * @route {GET} /
@@ -27,8 +25,8 @@ router.post('/ask/:id', async ctx => {
 	const message = await new Messages(dbName)
 	const itemID = parseInt(ctx.params.id)
 	ctx.hbs.body = ctx.request.body
+	const body = ctx.request.body
 	try {
-		const body = ctx.request.body
 		//create new message
 		await message.ask(body.subject, body.question, itemID)
 		const referrer = body.referrer || '/'
@@ -43,11 +41,30 @@ router.post('/ask/:id', async ctx => {
 })
 
 router.get('/answer/:id', async ctx => {
-	//load answer-question .handlebars template
+	const messageID = parseInt(ctx.params.id)
+	const message = await new Messages(dbName)
+	ctx.hbs.message = await message.getMessage(messageID)
+	console.log(ctx.hbs)
+	await ctx.render('answer', ctx.hbs)
 })
 
 router.post('/answer/:id', async ctx => {
-	//pass data along to the item.answer function
+	const messageID = parseInt(ctx.params.id)
+	const message = await new Messages(dbName)
+	ctx.hbs.body = ctx.request.body
+	const body = ctx.request.body
+	try {
+		//update message with answer
+		await message.answer(body.answer, messageID)
+		const referrer = body.referrer || '/'
+		return ctx.redirect(`${referrer}?msg=question sent succsessfully...`)
+	} catch(err) {
+		console.log(err)
+		ctx.hbs.msg = err.message
+		await ctx.render('error', ctx.hbs)
+	} finally {
+		await message.close()
+	}
 })
 
 export default router

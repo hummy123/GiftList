@@ -57,7 +57,7 @@ class Messages {
 		await this.db.run(sql)
 		return true
 	}
-	
+
 	/**
 	 * gets all messages related to a specific item
 	 * @param {Number} itemID the item to retrieve questions about
@@ -70,7 +70,7 @@ class Messages {
 		if(result === undefined) return null
 		return result
 	}
-	
+
 	/**
 	 * gets a specific message
 	 * @param {Number} messageID identifies which message object to retrieve

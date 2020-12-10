@@ -48,12 +48,12 @@
 		</tr>
 			{{#each messages}}
 				<tr> 
-					<td>{{this.question}}</td>
+					<td>{{this.summary}}</td>
 					<td>
 					{{#if this.answer}}
 						{{this.answer}}
 					{{else}}
-						<a href="answer/{{this.id}}">Click to Answer</a>
+						<a href="/answer/{{this.id}}">Click to Answer</a>
 					{{/if}}
 					</td>
 				</tr>

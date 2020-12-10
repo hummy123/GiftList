@@ -86,7 +86,7 @@ test('ANSWER QUESTION : missing answer', async test => {
 	const message = await new Messages() // no database specified so runs in-memory
 	await message.ask('summary', 'test question', 1)
 	try {
-		const result = await message.answer('', 1)
+		await message.answer('', 1)
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'missing field')
@@ -100,7 +100,7 @@ test('ANSWER QUESTION : missing id', async test => {
 	const message = await new Messages() // no database specified so runs in-memory
 	await message.ask('summary', 'test question', 1)
 	try {
-		const result = await message.answer('test answer', '')
+		await message.answer('test answer', '')
 		test.fail('error not thrown')
 	} catch(err) {
 		test.is(err.message, 'missing field')
