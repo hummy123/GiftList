@@ -52,11 +52,10 @@ router.post('/sendpledge/:id', async ctx => {
 	const item = await new Items(dbName)
 	const itemID = parseInt(ctx.params.id)
 	const donorID = parseInt(ctx.hbs.authorised)
-	ctx.hbs.body = ctx.request.body
+	const body = ctx.request.body
 	try {
 		//call pledge function
 		await item.pledgeItem(itemID, donorID)
-		const body = ctx.request.body
 		const referrer = body.referrer || '/'
 		return ctx.redirect(`${referrer}?msg=item pledged successfully...`)
 	} catch(err) {
@@ -72,12 +71,31 @@ router.post('/newitem/:id', async ctx => {
 	const item = await new Items(dbName)
 	const eventID = parseInt(ctx.params.id)
 	ctx.hbs.body = ctx.request.body
+	const body = ctx.request.body
 	try {
 		//copy image into correct directory
-		const body = ctx.request.body
 		const image = ctx.request.files.image
 		fs.copy(image.path, `public/uploads/items/${image.name}`)
 		await item.newItem(body.name, body.price, image.name, body.link, eventID)
+		const referrer = body.referrer || '/'
+		return ctx.redirect(`${referrer}?msg=item added successfully...`)
+	} catch(err) {
+		console.log(err)
+		ctx.hbs.msg = err.message
+		await ctx.render('error', ctx.hbs)
+	} finally {
+		await item.close()
+	}
+})
+
+router.post('/sendThanks/:id', async ctx => {
+	const item = await new Items(dbName)
+	const itemID = parseInt(ctx.params.id)
+	const curItem = await item.getItem(itemID) //this line enables access to donor id
+	const body = ctx.request.body
+	try {
+		//call thanks function
+		await item.thankDonor(itemID, curItem.donor_id)
 		const referrer = body.referrer || '/'
 		return ctx.redirect(`${referrer}?msg=item added successfully...`)
 	} catch(err) {

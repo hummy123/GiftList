@@ -27,8 +27,16 @@
 	<main>
 		<h2>{{item.name}}</h2>
 		<img src="{{host}}/uploads/items/{{item.image}}">
-		{{#if item.pledged}}
-		<p>Item has been pledged by {{item.user}}</p>
+		
+		{{#if item.thanks}}
+		<p>List owner has thanked {{item.user}} for pledging {{item.name}}</p>
+		{{else if item.pledged}}
+				<p>Item has been pledged by {{item.user}}</p>
+				{{#if owner}}
+					<form method="post" action="/sendThanks/{{item.id}}">
+						<input type="submit" value="Thank Donor" />
+					</form>
+				{{/if}}
 		{{else if owner}}
 				<p>Waiting for pledge...</p>
 		{{else if authorised}}

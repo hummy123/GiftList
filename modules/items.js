@@ -20,7 +20,7 @@ class Items {
 			const sql = `CREATE TABLE IF NOT EXISTS items\
 				(id INTEGER PRIMARY KEY AUTOINCREMENT, 
 				name TEXT, price REAL, image TEXT, link TEXT, pledged INTEGER DEFAULT 0,
-				event_id INTEGER, donor_id INTEGER,
+				event_id INTEGER, donor_id INTEGER, thanks INTEGER DEFAULT 0,
 				FOREIGN KEY(event_id) REFERENCES event(id),
 				FOREIGN KEY(donor_id) REFERENCES users(id));`
 			/* all values required, except for donor id if item not pledged.
@@ -102,8 +102,8 @@ class Items {
 	 * @param {Number} donorID identifies donor who made pledge
 	 * @returns {Boolean} returns true if removal successful
 	 */
-	async notifyPledge(itemID, donorID) {
-		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${donorID}`
+	async notifyPledge(itemID, creatorID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${creatorID}`
 		const results = await this.db.run(sql)
 		const recipient = results.email
 		const subject = `An item has been pledged to you by ${results.user}!`
@@ -117,16 +117,29 @@ class Items {
 	}
 
 	/**
+	 * stores on system that creator has received pledge and thanks donor
+	 * @param {Number} itemID the item the list owner is thanking for
+	 * @param {Number} creatorID identifies the list owner
+	 * @returns {Boolean} returns true if successfully record on
+	 */
+	async thankDonor(itemID, donorID) {
+		const sql = `UPDATE items SET thanks = 1 WHERE id=${itemID}`
+		await this.db.run(sql)
+		await this.thanksMessage(itemID, donorID)
+		return true
+	}
+
+	/**
 	 * retrieves various db info and constructs/sends a message to thank donor of pledge
 	 * @param {Number} itemID the item's primary key
 	 * @param {Number} donorID identifies donor who made pledge
 	 * @returns {Boolean} returns true if removal successful
 	 */
-	async sendThanks(itemID, creatorID) {
-		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${creatorID}`
+	async thanksMessage(itemID, donorID) {
+		const sql = `SELECT * from items, users WHERE items.id=${itemID} AND users.id=${donorID}`
 		const results = await this.db.run(sql)
 		const recipient = results.email
-		const subject = `Tiy have been thanked by ${results.user} for your pledge!`
+		const subject = `You have been thanked by ${results.user} for your pledge!`
 		const message = `Hi there\n\n
 						We just wanted to let you know that ${results.user} has seen
 						the pledge you kindly placed for ${results.name} and 
