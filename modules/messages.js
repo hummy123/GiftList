@@ -77,7 +77,9 @@ class Messages {
 			if(val.length === 0) throw new Error('missing field')
 		})
 		if (typeof messageID !== 'number') throw new Error('messageID must be a number')
-		const sql = `UPDATE messages SET answer="${answer}" WHERE id=${messageID}`
+		const sql = `UPDATE messages 
+					SET answer="${answer}"
+					WHERE id=${messageID}`
 		await this.db.run(sql)
 		await this.answerEmail(messageID)
 		return true
@@ -98,7 +100,7 @@ class Messages {
 		const question = results.question
 		const answer = results.answer
 		//get link for the item the question is about
-		sql = `SELECT * FROM items, messages WHERE message.id=${messageID}`
+		sql = `SELECT * FROM items, messages WHERE messages.id=${messageID}`
 		results = await this.db.get(sql)
 		const subject = 'You have received an answer to your question!'
 		const message = `\nHi there\n
