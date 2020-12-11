@@ -23,7 +23,7 @@ test.serial('NEW MESSAGE : ask question successfully', async test => {
 		message.close()
 	}
 })
-/*
+
 test.serial('NEW MESSAGE : missing summary', async test => {
 	test.plan(1)
 	const message = await new Messages('test-messages.db')
@@ -81,7 +81,7 @@ test.serial('ANSWER QUESTION : answer successfully', async test => {
 	const message = await new Messages('test-messages.db')
 	await message.ask('summary', 'test question', 1)
 	try {
-		const result = await message.answer('sample answer', 1)
+		const result = await message.answer('test answer', 1)
 		test.is(result, true)
 	} catch(err) {
 		test.fail(err.message)
@@ -93,7 +93,7 @@ test.serial('ANSWER QUESTION : answer successfully', async test => {
 test.serial('ANSWER QUESTION : missing answer', async test => {
 	test.plan(1)
 	const message = await new Messages('test-messages.db')
-	await message.answer('summary', 'test question', 1)
+	await message.ask('summary', 'test question', 1)
 	try {
 		await message.answer('', 1)
 		test.fail('error not thrown')
@@ -158,7 +158,7 @@ test.serial('GET MESSAGE : error if id not number', async test => {
 		message.close()
 	}
 })
-*/
+
 //create required foreign key tables before each test
 test.serial.beforeEach(async t => {
 	if (fs.existsSync('test-messages.db')) {
