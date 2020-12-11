@@ -1,13 +1,7 @@
 
 # Screencast Order
 
-This .md file exists as a plan about the order to test functionality for the screencast.
-
-I apologise for not having a webcam or microphone to speak with. 
-
-I intend highlight the specific functionality being tested in the screencast, and then to switch to the browser tab to test it.
-
-Apologies if the screencast is hard to follow without a microphone, but I'll try my best.
+This .md file exists as a plan about the order to test functionality for the screencast. The tasks are taken from https://github.coventry.ac.uk/agile/projects/blob/master/10%20Gift%20List.md .
 
 ---
 

@@ -57,7 +57,7 @@ class Messages {
 		const sql = `SELECT * from items, users WHERE items.id=${itemID}`
 		const results = await this.db.get(sql)
 		const recipient = results.email
-		const subject = `Item wishlist question: ${summary}`
+		const subject = `You have received an item wishlist question. Answer now!`
 		const message = `\nHi there\n
 						You have just received a question about an item on your wishlist.
 						 \nQuestion: ${question} Product details: ${results.link}\n
